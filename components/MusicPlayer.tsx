@@ -104,7 +104,7 @@ export const MusicPlayer: React.FC = () => {
         <div className="flex justify-between items-end mb-1">
           <div>
             <h3 className="font-semibold text-gray-800 text-sm">Yetta's Day</h3>
-            <p className="text-xs text-gray-500">Artist: Your Boyfriend</p>
+            <p className="text-xs text-gray-500">Artist: Your Father</p>
           </div>
           <button
             onClick={togglePlay}
