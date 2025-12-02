@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Music } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { Play, Pause, Music } from "lucide-react";
 
 export const MusicPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -23,7 +23,10 @@ export const MusicPlayer: React.FC = () => {
           setIsPlaying(true);
         })
         .catch((error) => {
-          console.log("Autoplay dicegah oleh browser. Menunggu interaksi user.", error);
+          console.log(
+            "Autoplay dicegah oleh browser. Menunggu interaksi user.",
+            error
+          );
           setIsPlaying(false);
         });
     }
@@ -40,13 +43,12 @@ export const MusicPlayer: React.FC = () => {
       }
     };
 
-    audio.addEventListener('timeupdate', updateProgress);
-    audio.addEventListener('loadedmetadata', updateProgress);
-    // Loop sudah dihandle oleh atribut loop di tag audio, tapi state perlu sync jika ada case lain
-    
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("loadedmetadata", updateProgress);
+
     return () => {
-      audio.removeEventListener('timeupdate', updateProgress);
-      audio.removeEventListener('loadedmetadata', updateProgress);
+      audio.removeEventListener("timeupdate", updateProgress);
+      audio.removeEventListener("loadedmetadata", updateProgress);
     };
   }, []);
 
@@ -77,43 +79,51 @@ export const MusicPlayer: React.FC = () => {
     if (isNaN(time)) return "0:00";
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   return (
     <div className="bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl p-4 shadow-lg flex items-center gap-4 transition-transform hover:scale-[1.02]">
       {/* Real Audio Element */}
-      <audio 
-        ref={audioRef} 
-        src="https://hbdyetta.netlify.app/bg.mp3" 
-        loop 
+      <audio
+        ref={audioRef}
+        src="https://hbdyetta.netlify.app/bg.mp3"
+        loop
         preload="auto"
       />
 
-      <div className={`w-12 h-12 rounded-full bg-gradient-to-tr from-rose-300 to-purple-300 flex items-center justify-center shadow-inner ${isPlaying ? 'animate-spin-slow' : ''}`}>
+      <div
+        className={`w-12 h-12 rounded-full bg-gradient-to-tr from-rose-300 to-purple-300 flex items-center justify-center shadow-inner ${
+          isPlaying ? "animate-spin-slow" : ""
+        }`}
+      >
         <Music className="w-6 h-6 text-white" />
       </div>
-      
+
       <div className="flex-1">
         <div className="flex justify-between items-end mb-1">
           <div>
             <h3 className="font-semibold text-gray-800 text-sm">Yetta's Day</h3>
-            <p className="text-xs text-gray-500">Artist: Ayah</p>
+            <p className="text-xs text-gray-500">Artist: Your Boyfriend</p>
           </div>
-          <button 
+          <button
             onClick={togglePlay}
             className="text-rose-500 hover:text-rose-600 focus:outline-none transition-colors"
           >
-            {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
+            {isPlaying ? (
+              <Pause size={20} fill="currentColor" />
+            ) : (
+              <Play size={20} fill="currentColor" />
+            )}
           </button>
         </div>
-        
+
         {/* Interactive Progress Bar */}
-        <div 
+        <div
           className="w-full bg-white/50 h-1.5 rounded-full overflow-hidden cursor-pointer hover:h-2 transition-all"
           onClick={handleSeek}
         >
-          <div 
+          <div
             className="h-full bg-rose-400 rounded-full transition-all duration-100 ease-linear"
             style={{ width: `${progress}%` }}
           />
@@ -123,7 +133,7 @@ export const MusicPlayer: React.FC = () => {
           <span>{formatTime(duration)}</span>
         </div>
       </div>
-      
+
       <style>{`
         @keyframes spin-slow {
           from { transform: rotate(0deg); }
